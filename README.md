@@ -15,40 +15,18 @@ To use the Data Encryption Standard (DES) algorithm for a practical application,
 Name: Muthulakshmi D
 Reg : 212223040122
 ```
-def encrypt(message, key):
-    encrypted = []
-    key_length = len(key)
-    for i in range(len(message)):
-        encrypted_char = chr(ord(message[i]) ^ ord(key[i % key_length]))
-        encrypted.append(encrypted_char)
-    return ''.join(encrypted)
+### 7 des
+def xor_cipher(text, key):
+    return ''.join(chr(ord(c) ^ ord(key[i % len(key)])) for i, c in enumerate(text))
 
-def decrypt(encrypted_message, key):
-    # XOR again with the same key
-    decrypted = []
-    key_length = len(key)
-    for i in range(len(encrypted_message)):
-        decrypted_char = chr(ord(encrypted_message[i]) ^ ord(key[i % key_length]))
-        decrypted.append(decrypted_char)
-    return ''.join(decrypted)
+msg = input("Enter message: ")
+key = input("Enter key: ")
 
-# Main simulation
-print("\n***** Simulation of XOR Encryption and Decryption *****\n")
+enc = xor_cipher(msg, key)
+print("Encrypted (hex):", ' '.join(f"{ord(c):02X}" for c in enc))
 
-# Get user input
-message = input("Enter the message to encrypt: ")
-key = input("Enter the encryption key: ")
-
-# Encrypt
-encrypted_message = encrypt(message, key)
-
-# Show original and encrypted message
-print("\nOriginal Message:", message)
-print("Encrypted Message (in hex):", ' '.join(f"{ord(c):02X}" for c in encrypted_message))
-
-# Decrypt
-decrypted_message = decrypt(encrypted_message, key)
-print("Decrypted Message:", decrypted_message)
+dec = xor_cipher(enc, key)
+print("Decrypted message:", dec)
 ```
 
 
